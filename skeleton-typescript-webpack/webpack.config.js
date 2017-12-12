@@ -92,7 +92,9 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     ]
   },
   plugins: [
-    new AureliaPlugin(),
+    new AureliaPlugin({
+      includeAll: 'src' // quick enablement of view dynamic composition
+    }),
     new ProvidePlugin({
       'Promise': 'bluebird',
       '$': 'jquery',
@@ -113,7 +115,8 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       },
     }),
     new CopyWebpackPlugin([
-      { from: 'static/favicon.ico', to: 'favicon.ico' }
+      { from: 'static/favicon.ico', to: 'favicon.ico' },
+      { from: 'frame.html', to: 'frame.html' }
     ]),
     ...when(extractCss, new ExtractTextPlugin({
       filename: production ? '[contenthash].css' : '[id].css',
